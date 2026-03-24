@@ -1,14 +1,25 @@
-stage('Docker Build') {
-    steps {
-        // Build the image from your Dockerfile
-        sh 'docker build -t my-flask-app .'
-    }
-}
-stage('Docker Run') {
-    steps {
-        // Stop the old container if it exists, then run the new one
-        sh 'docker stop myapp-container || true'
-        sh 'docker rm myapp-container || true'
-        sh 'docker run -d -p 5000:5000 --name myapp-container my-flask-app'
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Likitha-046/demo.git'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                // This 'steps' MUST be inside a 'stage'
+                sh 'docker build -t my-flask-app .'
+            }
+        }
+
+        stage('Run Script') {
+            steps {
+                sh 'chmod +x script.sh'
+                sh './script.sh'
+            }
+        }
     }
 }
