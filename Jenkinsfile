@@ -6,7 +6,7 @@ pipeline {
         stage('Clone') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/LikhithMG/jenkins_demo1.git'
+                    url: 'https://github.com/Likitha-046/demo.git'
             }
         }
          stage('Run Python Script') {
